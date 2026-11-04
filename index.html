@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Free Fire Sensitivity Checker</title>
+    <title>AI Free Fire Sensitivity & Button HUD Checker</title>
     <style>
         :root {
             --bg-color: #080c14;
@@ -12,13 +12,13 @@
             --accent-blue: #00f2fe;
             --text-color: #f8fafc;
             --subtext-color: #94a3b8;
+            --error-color: #ef4444;
         }
 
         * {
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
-            touch-action: manipulation;
         }
 
         body {
@@ -26,7 +26,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 16px;
+            padding: 20px 16px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -35,12 +35,12 @@
 
         .header {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         h1 {
-            font-size: 18px;
-            margin: 0 0 4px 0;
+            font-size: 20px;
+            margin: 0 0 6px 0;
             color: var(--accent-ff);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -48,7 +48,7 @@
 
         p {
             margin: 0;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--subtext-color);
         }
 
@@ -57,34 +57,39 @@
             max-width: 480px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
-        /* 1. Phần chọn dòng điện thoại */
         .section-box {
             background-color: var(--card-bg);
-            padding: 14px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 14px;
             border: 1px solid rgba(255, 119, 0, 0.3);
         }
 
         .label-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
             color: var(--accent-ff);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: block;
             text-transform: uppercase;
         }
 
+        .select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         input[type="text"] {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: #06090f;
             border: 1px solid #1e293b;
-            border-radius: 8px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -93,62 +98,33 @@
             border-color: var(--accent-ff);
         }
 
-        /* 2. Vùng test vuốt kéo tâm */
-        #touchArea {
+        select {
             width: 100%;
-            height: 160px;
-            background-color: var(--card-bg);
-            border: 2px dashed rgba(255, 119, 0, 0.4);
+            padding: 14px;
+            background-color: #06090f;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-check {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff7700, #ff4400);
+            border: none;
             border-radius: 12px;
-            position: relative;
-            overflow: hidden;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 119, 0, 0.4);
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .instructions {
-            position: absolute;
-            pointer-events: none;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
-            line-height: 1.4;
-        }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .test-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--subtext-color);
-            padding: 0 4px;
-        }
-
-        .test-stats span {
-            color: var(--accent-blue);
-            font-weight: bold;
-        }
-
-        /* 3. Nút Check Độ Nhạy */
-        .btn-check {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #ff7700, #ff4400);
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 119, 0, 0.4);
+            gap: 8px;
             transition: transform 0.1s;
         }
 
@@ -156,120 +132,192 @@
             transform: scale(0.98);
         }
 
-        /* 4. Bảng hiện ra độ nhạy đã check */
+        .btn-check:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Bảng hiển thị kết quả độ nhạy & nút bắn */
         .result-box {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 14px;
-            border: 1px solid rgba(255, 119, 0, 0.5);
-            display: none; /* Mặc định ẩn, bấm check mới hiện */
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            display: none;
         }
 
         .result-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .res-item {
             background-color: #06090f;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-ff);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-ff);
+        }
+
+        .res-item.highlight {
+            border-left-color: var(--accent-blue);
         }
 
         .res-label {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--subtext-color);
             text-transform: uppercase;
         }
 
         .res-val {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #fff;
-            margin-top: 2px;
+            margin-top: 4px;
+        }
+
+        .error-msg {
+            color: var(--error-color);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Free Fire Sensitivity Checker</h1>
-        <p>Chọn máy, test vuốt tâm & Nhận thông số chuẩn (Max 200)</p>
+        <h1>AI Free Fire Sensitivity Master</h1>
+        <p>Phân tích AI chính xác thiết bị & Tối ưu nút bắn chuẩn</p>
     </div>
 
     <div class="container">
         
-        <!-- 1. Phần chọn dòng điện thoại -->
+        <!-- Phần chọn & tìm kiếm dòng điện thoại -->
         <div class="section-box">
-            <span class="label-title">📱 1. Chọn dòng điện thoại của bạn</span>
-            <input type="text" id="phoneInput" list="phoneList" placeholder="VD: iPhone 13, Samsung A54, ROG Phone...">
-            <datalist id="phoneList">
-                <option value="iPhone 16 Pro Max">
-                <option value="iPhone 15 Pro Max">
-                <option value="iPhone 14 Pro Max">
-                <option value="iPhone 13 / 13 Pro">
-                <option value="iPhone 11 / 12">
-                <option value="Samsung Galaxy S24 Ultra">
-                <option value="Samsung Galaxy S23 / S22">
-                <option value="Samsung Galaxy A54 / A55">
-                <option value="Samsung Galaxy A32 / A14">
-                <option value="Xiaomi 13 / 14 Ultra">
-                <option value="Poco X5 Pro / X6 Pro">
-                <option value="Redmi Note 12 / Note 13">
-                <option value="OPPO Reno 10 / 11">
-                <option value="ASUS ROG Phone 6 / 7 / 8">
-                <option value="Nubia Red Magic 8 / 9">
-            </datalist>
+            <span class="label-title">📱 Chọn hoặc nhập đúng dòng điện thoại</span>
+            <div class="select-group">
+                <input type="text" id="phoneInput" list="phoneList" placeholder="🔍 Gõ tên máy (iPhone, Samsung, ROG...)" oninput="syncSelect(this.value); hideError();">
+                <datalist id="phoneList">
+                    <option value="iPhone 16 Pro Max">
+                    <option value="iPhone 16 Pro">
+                    <option value="iPhone 16">
+                    <option value="iPhone 15 Pro Max">
+                    <option value="iPhone 15 Pro">
+                    <option value="iPhone 14 Pro Max">
+                    <option value="iPhone 13">
+                    <option value="iPhone 12">
+                    <option value="iPhone 11">
+                    <option value="iPhone 8 Plus">
+                    <option value="Samsung Galaxy S24 Ultra">
+                    <option value="Samsung Galaxy S23 Ultra">
+                    <option value="Samsung Galaxy A54">
+                    <option value="Samsung Galaxy A55">
+                    <option value="Samsung Galaxy A32">
+                    <option value="Samsung Galaxy A14">
+                    <option value="Xiaomi 14 Ultra">
+                    <option value="Xiaomi 13">
+                    <option value="Poco X6 Pro">
+                    <option value="Poco X5 Pro">
+                    <option value="Redmi Note 13">
+                    <option value="Redmi Note 12">
+                    <option value="OPPO Reno 11">
+                    <option value="OPPO Reno 10">
+                    <option value="Realme C55">
+                    <option value="Vivo V30">
+                    <option value="ASUS ROG Phone 8">
+                    <option value="ASUS ROG Phone 7">
+                    <option value="Nubia Red Magic 9 Pro">
+                </datalist>
+
+                <select id="phoneSelect" onchange="document.getElementById('phoneInput').value = this.value; hideError();">
+                    <option value="">-- Hoặc chọn nhanh danh sách chuẩn --</option>
+                    <optgroup label="Apple iPhone">
+                        <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
+                        <option value="iPhone 15 Pro Max">iPhone 15 Pro Max</option>
+                        <option value="iPhone 14 Pro Max">iPhone 14 Pro Max</option>
+                        <option value="iPhone 13">iPhone 13</option>
+                        <option value="iPhone 12">iPhone 12</option>
+                        <option value="iPhone 11">iPhone 11</option>
+                        <option value="iPhone 8 Plus">iPhone 8 Plus</option>
+                    </optgroup>
+                    <optgroup label="Samsung">
+                        <option value="Samsung Galaxy S24 Ultra">Samsung Galaxy S24 Ultra</option>
+                        <option value="Samsung Galaxy S23 Ultra">Samsung Galaxy S23 Ultra</option>
+                        <option value="Samsung Galaxy A55">Samsung Galaxy A55</option>
+                        <option value="Samsung Galaxy A54">Samsung Galaxy A54</option>
+                        <option value="Samsung Galaxy A32">Samsung Galaxy A32</option>
+                        <option value="Samsung Galaxy A14">Samsung Galaxy A14</option>
+                    </optgroup>
+                    <optgroup label="Xiaomi / Poco / Redmi">
+                        <option value="Xiaomi 14 Ultra">Xiaomi 14 Ultra</option>
+                        <option value="Poco X6 Pro">Poco X6 Pro</option>
+                        <option value="Redmi Note 13">Redmi Note 13</option>
+                    </optgroup>
+                    <optgroup label="OPPO / Realme / Vivo">
+                        <option value="OPPO Reno 11">OPPO Reno 11</option>
+                        <option value="Realme C55">Realme C55</option>
+                        <option value="Vivo V30">Vivo V30</option>
+                    </optgroup>
+                    <optgroup label="Gaming Phone">
+                        <option value="ASUS ROG Phone 8">ASUS ROG Phone 8</option>
+                        <option value="ASUS ROG Phone 7">ASUS ROG Phone 7</option>
+                        <option value="Nubia Red Magic 9 Pro">Nubia Red Magic 9 Pro</option>
+                    </optgroup>
+                </select>
+                <div class="error-msg" id="errorMsg">⚠️ Tên điện thoại không hợp lệ hoặc chưa có trong hệ thống! Vui lòng chọn đúng dòng máy.</div>
+            </div>
         </div>
 
-        <!-- 2. Vùng test vuốt kéo tâm thực tế -->
-        <div class="section-box">
-            <span class="label-title">🎯 2. Test Tốc Độ Vuốt Tâm (Vuốt ở đây)</span>
-            <div id="touchArea">
-                <div class="instructions" id="instructionText">
-                    Vuốt kéo nhanh ngón tay lên xuống liên tục<br>giống như lúc kéo tâm Free Fire
-                </div>
-                <canvas id="drawCanvas"></canvas>
-            </div>
-            <div class="test-stats" style="margin-top: 8px;">
-                <span>Tốc độ đo: <strong id="hzVal">0 Hz</strong></span>
-                <span>Độ trễ: <strong id="msVal" style="color: #00e676;">0 ms</strong></span>
-            </div>
-        </div>
+        <!-- Nút Check Độ Nhạy có Loading -->
+        <button class="btn-check" id="btnCheck" onclick="runAICheck()">
+            <div class="spinner" id="spinner"></div>
+            <span id="btnText">🤖 AI CHECK ĐỘ NHẠY & NÚT BẮN</span>
+        </button>
 
-        <!-- 3. Nút Check Độ Nhạy -->
-        <button class="btn-check" onclick="checkSensitivity()">⚡ CHECK ĐỘ NHẠY NGAY</button>
-
-        <!-- 4. Bảng hiển thị kết quả độ nhạy đã check -->
+        <!-- Bảng hiển thị kết quả -->
         <div class="result-box" id="resultBox">
-            <span class="label-title" style="margin-bottom: 0; color: var(--accent-blue);">🔥 Bảng Độ Nhạy Free Fire Chuẩn Nhất (Thang 200)</span>
+            <span class="label-title" style="margin-bottom: 0; color: var(--accent-blue);">🔥 Kết Quả Chuẩn Meta Free Fire</span>
             <div class="result-grid">
                 <div class="res-item">
                     <div class="res-label">Nhìn Xung Quanh</div>
-                    <div class="res-val" id="ffGen">175</div>
+                    <div class="res-val" id="ffGen">0</div>
                 </div>
                 <div class="res-item">
                     <div class="res-label">Red Dot Sight</div>
-                    <div class="res-val" id="ffRed">180</div>
+                    <div class="res-val" id="ffRed">0</div>
                 </div>
                 <div class="res-item">
                     <div class="res-label">Ống Ngắm 2X</div>
-                    <div class="res-val" id="ff2x">165</div>
+                    <div class="res-val" id="ff2x">0</div>
                 </div>
                 <div class="res-item">
                     <div class="res-label">Ống Ngắm 4X</div>
-                    <div class="res-val" id="ff4x">145</div>
+                    <div class="res-val" id="ff4x">0</div>
                 </div>
                 <div class="res-item">
                     <div class="res-label">Ống Ngắm Sniper</div>
-                    <div class="res-val" id="ffSniper">110</div>
+                    <div class="res-val" id="ffSniper">0</div>
                 </div>
-                <div class="res-item">
-                    <div class="res-label">Nút Bắn Khuyên Dùng</div>
-                    <div class="res-val" id="ffBtn">45%</div>
+                <div class="res-item highlight">
+                    <div class="res-label">Kích Thước Nút Bắn</div>
+                    <div class="res-val" id="ffBtn">0%</div>
                 </div>
             </div>
         </div>
@@ -277,134 +325,117 @@
     </div>
 
     <script>
-        const canvas = document.getElementById('drawCanvas');
-        const ctx = canvas.getContext('2d');
-        const touchArea = document.getElementById('touchArea');
-        const instructionText = document.getElementById('instructionText');
+        // Danh sách thiết bị hợp lệ chuẩn xác trong hệ thống
+        const validPhones = [
+            "iphone 16 pro max", "iphone 16 pro", "iphone 16", 
+            "iphone 15 pro max", "iphone 15 pro", "iphone 14 pro max", 
+            "iphone 13", "iphone 12", "iphone 11", "iphone 8 plus",
+            "samsung galaxy s24 ultra", "samsung galaxy s23 ultra", 
+            "samsung galaxy a54", "samsung galaxy a55", 
+            "samsung galaxy a32", "samsung galaxy a14",
+            "xiaomi 14 ultra", "xiaomi 13", "poco x6 pro", "poco x5 pro", 
+            "redmi note 13", "redmi note 12", "oppo reno 11", "oppo reno 10", 
+            "realme c55", "vivo v30", "asus rog phone 8", "asus rog phone 7", 
+            "nubia red magic 9 pro"
+        ];
 
-        const hzVal = document.getElementById('hzVal');
-        const msVal = document.getElementById('msVal');
-
-        let touchEvents = [];
-        let lastTouchTime = 0;
-        let points = [];
-        let measuredHz = 0;
-
-        function resizeCanvas() {
-            canvas.width = touchArea.clientWidth;
-            canvas.height = touchArea.clientHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        function handleTouch(e) {
-            e.preventDefault();
-            instructionText.style.display = 'none';
-
-            const now = performance.now();
-            if (lastTouchTime > 0) {
-                const delta = now - lastTouchTime;
-                if (delta > 0) {
-                    touchEvents.push(delta);
-                    if (touchEvents.length > 40) touchEvents.shift();
+        function syncSelect(val) {
+            const select = document.getElementById('phoneSelect');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value.toLowerCase().includes(val.toLowerCase()) && val.length > 2) {
+                    select.selectedIndex = i;
+                    break;
                 }
             }
-            lastTouchTime = now;
-
-            const rect = touchArea.getBoundingClientRect();
-            for (let i = 0; i < e.touches.length; i++) {
-                const x = e.touches[i].clientX - rect.left;
-                const y = e.touches[i].clientY - rect.top;
-                points.push({ x, y, alpha: 1.0 });
-            }
-
-            updateMetrics();
         }
 
-        function updateMetrics() {
-            if (touchEvents.length === 0) return;
-            const avgDelta = touchEvents.reduce((a, b) => a + b, 0) / touchEvents.length;
-            measuredHz = Math.min(Math.round(1000 / avgDelta), 300);
-            hzVal.innerText = `${measuredHz} Hz`;
-            msVal.innerText = `${avgDelta.toFixed(1)} ms`;
+        function hideError() {
+            document.getElementById('errorMsg').style.display = 'none';
         }
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < points.length; i++) {
-                const p = points[i];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 119, 0, ${p.alpha})`;
-                ctx.shadowColor = '#ff7700';
-                ctx.shadowBlur = 6;
-                ctx.fill();
-                p.alpha -= 0.04;
-            }
-            points = points.filter(p => p.alpha > 0);
-            requestAnimationFrame(draw);
-        }
+        function runAICheck() {
+            const phoneInput = document.getElementById('phoneInput').value.trim().toLowerCase();
+            const phoneSelect = document.getElementById('phoneSelect').value.toLowerCase();
+            const rawPhone = phoneInput || phoneSelect;
 
-        touchArea.addEventListener('touchstart', handleTouch, { passive: false });
-        touchArea.addEventListener('touchmove', handleTouch, { passive: false });
+            const errorMsg = document.getElementById('errorMsg');
+            const resultBox = document.getElementById('resultBox');
 
-        function checkSensitivity() {
-            const phoneName = document.getElementById('phoneInput').value.trim();
-            
-            if (!phoneName) {
-                alert("Vui lòng nhập hoặc chọn tên điện thoại trước khi check!");
+            // Kiểm tra xem tên máy nhập vào có khớp với danh sách hợp lệ không
+            const isValid = validPhones.some(phone => phone.includes(rawPhone) && rawPhone.length >= 3);
+
+            if (!isValid) {
+                errorMsg.style.display = 'block';
+                resultBox.style.display = 'none';
                 return;
             }
 
-            let baseGen = 172;
-            let baseRed = 178;
-            let base2x = 162;
-            let base4x = 142;
-            let btnSize = 45;
+            errorMsg.style.display = 'none';
 
-            const nameLower = phoneName.toLowerCase();
+            const btn = document.getElementById('btnCheck');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('spinner');
 
-            // Tính toán thuật toán theo dòng máy kết hợp tốc độ vuốt thực tế
-            if (nameLower.includes('iphone')) {
-                baseGen -= 8; 
-                baseRed -= 5;
-                btnSize = 42;
-            } else if (nameLower.includes('rog') || nameLower.includes('red magic') || nameLower.includes('s24')) {
-                baseGen -= 12; 
-                baseRed -= 10;
-                btnSize = 40;
-            } else if (nameLower.includes('a14') || nameLower.includes('c55') || nameLower.includes('redmi') || nameLower.includes('a32') || nameLower.includes('a54')) {
-                baseGen = 194; 
-                baseRed = 196;
-                base2x = 182;
-                base4x = 160;
-                btnSize = 48;
-            }
+            // Hiệu ứng khoảng ngưng (loading) mô phỏng AI phân tích
+            btn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.innerText = "AI Đang Phân Tích Phần Cứng...";
+            resultBox.style.display = 'none';
 
-            // Nếu người dùng test vuốt nhanh, điều chỉnh thêm độ nhạy
-            if (measuredHz > 120) {
-                baseGen -= 5;
-                baseRed -= 5;
-            }
+            setTimeout(() => {
+                let baseGen = 175;
+                let baseRed = 180;
+                let base2x = 165;
+                let base4x = 145;
+                let baseSniper = 110;
+                let btnSize = 45;
 
-            const cap = (val) => Math.min(200, Math.max(0, Math.round(val)));
+                // Thuật toán gán thông số chi tiết theo từng dòng máy hợp lệ
+                if (rawPhone.includes('iphone')) {
+                    baseGen = 168; 
+                    baseRed = 174;
+                    base2x = 158;
+                    base4x = 138;
+                    btnSize = 42;
+                } else if (rawPhone.includes('rog') || rawPhone.includes('red magic') || rawPhone.includes('s24 ultra') || rawPhone.includes('s23 ultra')) {
+                    baseGen = 160; 
+                    baseRed = 165;
+                    base2x = 150;
+                    base4x = 132;
+                    btnSize = 38;
+                } else if (rawPhone.includes('a14') || rawPhone.includes('c55') || rawPhone.includes('a32')) {
+                    baseGen = 196; 
+                    baseRed = 198;
+                    base2x = 185;
+                    base4x = 165;
+                    btnSize = 48;
+                } else {
+                    baseGen = 182; 
+                    baseRed = 186;
+                    base2x = 172;
+                    base4x = 152;
+                    btnSize = 45;
+                }
 
-            // Gán giá trị vào bảng kết quả
-            document.getElementById('ffGen').innerText = cap(baseGen);
-            document.getElementById('ffRed').innerText = cap(baseRed);
-            document.getElementById('ff2x').innerText = cap(base2x);
-            document.getElementById('ff4x').innerText = cap(base4x);
-            document.getElementById('ffSniper').innerText = cap(110);
-            document.getElementById('ffBtn').innerText = `${btnSize}%`;
+                const cap = (val) => Math.min(200, Math.max(0, Math.round(val)));
 
-            // Hiển thị bảng kết quả ra màn hình ngay dưới nút check
-            document.getElementById('resultBox').style.display = 'block';
-            
-            // Cuộn mượt màn hình xuống phần kết quả
-            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+                // Đổ dữ liệu vào bảng kết quả
+                document.getElementById('ffGen').innerText = cap(baseGen);
+                document.getElementById('ffRed').innerText = cap(baseRed);
+                document.getElementById('ff2x').innerText = cap(base2x);
+                document.getElementById('ff4x').innerText = cap(base4x);
+                document.getElementById('ffSniper').innerText = cap(baseSniper);
+                document.getElementById('ffBtn').innerText = `${btnSize}%`;
+
+                // Phục hồi nút bấm và hiện bảng kết quả
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.innerText = "🤖 AI CHECK ĐỘ NHẠY & NÚT BẮN";
+                resultBox.style.display = 'block';
+
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            }, 1800);
         }
-
-        draw();
     </script>
 </body>
 </html>
