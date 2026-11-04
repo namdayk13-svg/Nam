@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Touch Test & AI Free Fire Sensitivity Auto-Optimizer (Scale 200)</title>
+    <title>Free Fire Touch & Sensitivity Checker (Scale 200)</title>
     <style>
         :root {
-            --bg-color: #090d16;
-            --card-bg: #151c2c;
-            --accent-color: #00f2fe;
-            --accent-green: #00e676;
-            --accent-ff: #ff9900;
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-ff: #ff7700;
+            --accent-blue: #00f2fe;
             --text-color: #f8fafc;
             --subtext-color: #94a3b8;
         }
@@ -42,7 +41,7 @@
         h1 {
             font-size: 18px;
             margin: 0 0 4px 0;
-            color: var(--accent-color);
+            color: var(--accent-ff);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -53,13 +52,53 @@
             color: var(--subtext-color);
         }
 
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Phần chọn dòng máy */
+        .search-section {
+            background-color: var(--card-bg);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 119, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--accent-ff);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #080c14;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-ff);
+        }
+
+        /* Dashboard cảm ứng */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            width: 100%;
-            max-width: 480px;
-            margin-bottom: 12px;
         }
 
         .card {
@@ -79,25 +118,22 @@
         .card-value {
             font-size: 18px;
             font-weight: bold;
-            color: var(--accent-color);
+            color: var(--accent-blue);
             margin-top: 2px;
         }
 
-        .card-value.green { color: var(--accent-green); }
-
+        /* Vùng test vuốt kéo tâm Free Fire */
         #touchArea {
             width: 100%;
-            max-width: 480px;
-            height: 220px;
+            height: 200px;
             background-color: var(--card-bg);
-            border: 2px dashed rgba(56, 189, 248, 0.3);
+            border: 2px dashed rgba(255, 119, 0, 0.4);
             border-radius: 12px;
             position: relative;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            touch-action: none;
         }
 
         .instructions {
@@ -105,7 +141,8 @@
             pointer-events: none;
             text-align: center;
             color: rgba(255, 255, 255, 0.4);
-            font-size: 13px;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
         canvas {
@@ -116,171 +153,111 @@
             height: 100%;
         }
 
-        .ai-section {
-            width: 100%;
-            max-width: 480px;
+        /* Kết quả độ nhạy FF chuẩn 200 */
+        .ai-result-box {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 14px;
-            margin-top: 12px;
-            border: 1px solid rgba(255, 153, 0, 0.3);
+            border: 1px solid rgba(255, 119, 0, 0.4);
+            display: none;
         }
-
-        .ai-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--accent-ff);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        label {
-            font-size: 11px;
-            color: var(--subtext-color);
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-            background-color: #0f172a;
-            color: #fff;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .btn-ai {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #ff9900, #ff5500);
-            border: none;
-            border-radius: 8px;
-            color: #fff;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
-            margin-top: 4px;
-        }
-
-        .btn-ai:active { transform: scale(0.98); }
 
         .result-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
-            margin-top: 12px;
-            display: none;
+            margin-top: 8px;
         }
 
         .res-box {
-            background-color: #0d1321;
+            background-color: #080c14;
             padding: 8px;
             border-radius: 6px;
             border-left: 3px solid var(--accent-ff);
         }
 
         .res-label { font-size: 10px; color: var(--subtext-color); }
-        .res-val { font-size: 15px; font-weight: bold; color: #fff; }
+        .res-val { font-size: 16px; font-weight: bold; color: #fff; }
 
         .btn-reset {
             width: 100%;
-            max-width: 480px;
             padding: 10px;
             background-color: transparent;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             color: var(--subtext-color);
             font-size: 12px;
-            margin-top: 10px;
             cursor: pointer;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Touch Response & AI FF Sensitivity</h1>
-        <p>Đo cảm ứng & AI đề xuất độ nhạy Free Fire (Thang 0-200)</p>
+        <h1>Free Fire Sensitivity Master</h1>
+        <p>Kiểm tra tốc độ vuốt tâm & Tối ưu độ nhạy chuẩn Meta (Max 200)</p>
     </div>
 
-    <!-- Dashboard thông số cảm ứng -->
-    <div class="dashboard">
-        <div class="card">
-            <div class="card-title">Tần Số Cảm Ứng</div>
-            <div class="card-value" id="hzVal">0 Hz</div>
-        </div>
-        <div class="card">
-            <div class="card-title">Độ Trễ Phản Hồi</div>
-            <div class="card-value green" id="msVal">0 ms</div>
-        </div>
-        <div class="card">
-            <div class="card-title">Chạm Thực Tế</div>
-            <div class="card-value" id="cpsVal">0</div>
-        </div>
-        <div class="card">
-            <div class="card-title">Hệ Điều Hành</div>
-            <div class="card-value green" id="osVal">--</div>
-        </div>
-    </div>
-
-    <!-- Vùng vuốt/chạm kiểm tra -->
-    <div id="touchArea">
-        <div class="instructions" id="instructionText">
-            Vuốt / Kéo nhanh liên tục ở đây<br>để đo độ nhạy cảm ứng thực tế
-        </div>
-        <canvas id="drawCanvas"></canvas>
-    </div>
-
-    <!-- AI Optimization Module -->
-    <div class="ai-section">
-        <div class="ai-title">
-            🎯 AI Free Fire Auto-Sensitivity (Scale 0-200)
+    <div class="container">
+        <!-- Phần chọn dòng máy -->
+        <div class="search-section">
+            <div class="section-title">🎯 Chọn Dòng Điện Thoại Của Bạn</div>
+            <input type="text" id="phoneInput" list="phoneList" placeholder="🔍 Gõ tên máy (VD: iPhone 13, Samsung A54, ROG...)" oninput="handlePhoneSelect()">
+            <datalist id="phoneList">
+                <option value="iPhone 16 Pro Max">
+                <option value="iPhone 15 Pro Max">
+                <option value="iPhone 14 Pro Max">
+                <option value="iPhone 13 / 13 Pro">
+                <option value="iPhone 11 / 12">
+                <option value="Samsung Galaxy S24 Ultra">
+                <option value="Samsung Galaxy S23 / S22">
+                <option value="Samsung Galaxy A54 / A55">
+                <option value="Samsung Galaxy A32 / A14">
+                <option value="Xiaomi 13 / 14 Ultra">
+                <option value="Poco X5 Pro / X6 Pro">
+                <option value="Redmi Note 12 / Note 13">
+                <option value="OPPO Reno 10 / 11">
+                <option value="ASUS ROG Phone 6 / 7 / 8">
+                <option value="Nubia Red Magic 8 / 9">
+            </datalist>
         </div>
 
-        <div class="form-row">
-            <div>
-                <label for="ramSelect">Dung lượng RAM:</label>
-                <select id="ramSelect">
-                    <option value="2">2 GB - 3 GB</option>
-                    <option value="4" selected>4 GB - 6 GB</option>
-                    <option value="8">8 GB - 12 GB+</option>
-                </select>
+        <!-- Dashboard đo tốc độ vuốt -->
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">Tốc Độ Vuốt (Hz)</div>
+                <div class="card-value" id="hzVal">0 Hz</div>
             </div>
-            <div>
-                <label for="refreshSelect">Màn hình (Hz):</label>
-                <select id="refreshSelect">
-                    <option value="60">60 Hz (Tiêu chuẩn)</option>
-                    <option value="90">90 Hz / 120 Hz+</option>
-                </select>
+            <div class="card">
+                <div class="card-title">Độ Trễ Cảm Ứng</div>
+                <div class="card-value" id="msVal" style="color: #00e676;">0 ms</div>
             </div>
         </div>
 
-        <button class="btn-ai" onclick="generateAISensitivity()">⚡ AI Phân Tích & Tối Ưu Độ Nhạy</button>
-
-        <div class="result-grid" id="resultGrid">
-            <div class="res-box"><div class="res-label">Nhìn xung quanh (General)</div><div class="res-val" id="ffGen">0</div></div>
-            <div class="res-box"><div class="res-label">Red Dot Sight</div><div class="res-val" id="ffRed">0</div></div>
-            <div class="res-box"><div class="res-label">Ống ngắm 2x</div><div class="res-val" id="ff2x">0</div></div>
-            <div class="res-box"><div class="res-label">Ống ngắm 4x</div><div class="res-val" id="ff4x">0</div></div>
-            <div class="res-box"><div class="res-label">Ống ngắm Sniper</div><div class="res-val" id="ffSniper">0</div></div>
-            <div class="res-box"><div class="res-label">Nút Bắn Khuyên Dùng</div><div class="res-val" id="ffBtn">0</div></div>
+        <!-- Vùng Test Vuốt Kéo Tâm -->
+        <div id="touchArea">
+            <div class="instructions" id="instructionText">
+                Kéo vuốt nhanh ngón tay lên xuống liên tục<br>giống như lúc kéo tâm Free Fire
+            </div>
+            <canvas id="drawCanvas"></canvas>
         </div>
-    </div>
 
-    <button class="btn-reset" onclick="resetStats()">Đặt Lại Tất Cả Dữ Liệu</button>
+        <!-- Kết quả AI Độ Nhạy Free Fire -->
+        <div class="ai-result-box" id="aiResultBox">
+            <div class="section-title" style="color: var(--accent-ff);">🔥 Độ Nhạy Free Fire Đề Xuất (Thang 200)</div>
+            <div class="result-grid">
+                <div class="res-box"><div class="res-label">Nhìn Xung Quanh</div><div class="res-val" id="ffGen">175</div></div>
+                <div class="res-box"><div class="res-label">Red Dot Sight</div><div class="res-val" id="ffRed">180</div></div>
+                <div class="res-box"><div class="res-label">Ống Ngắm 2X</div><div class="res-val" id="ff2x">165</div></div>
+                <div class="res-box"><div class="res-label">Ống Ngắm 4X</div><div class="res-val" id="ff4x">145</div></div>
+                <div class="res-box"><div class="res-label">Ống Ngắm Sniper</div><div class="res-val" id="ffSniper">110</div></div>
+                <div class="res-box"><div class="res-label">Nút Bắn Khuyên Dùng</div><div class="res-val" id="ffBtn">45%</div></div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetStats()">Đặt Lại Từ Đầu</button>
+    </div>
 
     <script>
         const canvas = document.getElementById('drawCanvas');
@@ -290,14 +267,8 @@
 
         const hzVal = document.getElementById('hzVal');
         const msVal = document.getElementById('msVal');
-        const cpsVal = document.getElementById('cpsVal');
-        const osVal = document.getElementById('osVal');
-
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        osVal.innerText = isIOS ? "iOS" : "Android";
 
         let touchEvents = [];
-        let totalTouches = 0;
         let lastTouchTime = 0;
         let points = [];
         let measuredHz = 0;
@@ -318,11 +289,10 @@
                 const delta = now - lastTouchTime;
                 if (delta > 0) {
                     touchEvents.push(delta);
-                    if (touchEvents.length > 50) touchEvents.shift();
+                    if (touchEvents.length > 40) touchEvents.shift();
                 }
             }
             lastTouchTime = now;
-            totalTouches++;
 
             const rect = touchArea.getBoundingClientRect();
             for (let i = 0; i < e.touches.length; i++) {
@@ -336,31 +306,24 @@
 
         function updateMetrics() {
             if (touchEvents.length === 0) return;
-
             const avgDelta = touchEvents.reduce((a, b) => a + b, 0) / touchEvents.length;
-            measuredHz = Math.min(Math.round(1000 / avgDelta), 360);
-            const latency = avgDelta.toFixed(1);
-
+            measuredHz = Math.min(Math.round(1000 / avgDelta), 300);
             hzVal.innerText = `${measuredHz} Hz`;
-            msVal.innerText = `${latency} ms`;
-            cpsVal.innerText = totalTouches;
+            msVal.innerText = `${avgDelta.toFixed(1)} ms`;
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             for (let i = 0; i < points.length; i++) {
                 const p = points[i];
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 242, 254, ${p.alpha})`;
-                ctx.shadowColor = '#00f2fe';
+                ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 119, 0, ${p.alpha})`;
+                ctx.shadowColor = '#ff7700';
                 ctx.shadowBlur = 8;
                 ctx.fill();
-
                 p.alpha -= 0.04;
             }
-
             points = points.filter(p => p.alpha > 0);
             requestAnimationFrame(draw);
         }
@@ -368,73 +331,57 @@
         touchArea.addEventListener('touchstart', handleTouch, { passive: false });
         touchArea.addEventListener('touchmove', handleTouch, { passive: false });
 
-        // Thuật toán AI tính toán độ nhạy Free Fire chuẩn Max 200
-        function generateAISensitivity() {
-            const ram = parseInt(document.getElementById('ramSelect').value);
-            const refresh = parseInt(document.getElementById('refreshSelect').value);
+        // Thuật toán AI tùy chỉnh riêng cho Free Fire (Scale Max 200)
+        function handlePhoneSelect() {
+            const phoneName = document.getElementById('phoneInput').value.trim();
+            if (phoneName.length < 2) return;
 
-            let baseGeneral = 175;
-            let baseRedDot = 180;
-            let base2x = 165;
-            let base4x = 145;
-            let baseSniper = 110;
-            let btnSize = 46;
+            let baseGen = 172;
+            let baseRed = 178;
+            let base2x = 162;
+            let base4x = 142;
+            let btnSize = 45;
 
-            // 1. Tối ưu theo RAM (Bù trừ độ trễ phần cứng)
-            if (ram === 2) {
-                baseGeneral = 195;
-                baseRedDot = 198;
-                base2x = 185;
-                base4x = 165;
-            } else if (ram === 8) {
-                baseGeneral = 158;
-                baseRedDot = 165;
-                base2x = 150;
-                base4x = 135;
-            }
+            const nameLower = phoneName.toLowerCase();
 
-            // 2. Điều chỉnh theo Hệ điều hành
-            if (isIOS) {
-                baseGeneral -= 10; // Cảm ứng iOS nhạy hơn nên giảm nhẹ tránh văng tâm
-                baseRedDot -= 8;
+            if (nameLower.includes('iphone')) {
+                baseGen -= 8; // iOS mượt sẵn, giảm để chống bay tâm
+                baseRed -= 5;
                 btnSize = 42;
+            } else if (nameLower.includes('rog') || nameLower.includes('red magic') || nameLower.includes('s24')) {
+                baseGen -= 12; // Máy gaming cao cấp tốc độ siêu nhạy
+                baseRed -= 10;
+                btnSize = 40;
+            } else if (nameLower.includes('a14') || nameLower.includes('c55') || nameLower.includes('redmi') || nameLower.includes('a32')) {
+                baseGen = 194; // Máy phân khúc thấp tăng max độ nhạy để kéo tâm không bị nặng tay
+                baseRed = 196;
+                base2x = 182;
+                base4x = 160;
+                btnSize = 48;
             }
 
-            // 3. Tối ưu theo Tần số quét màn hình & Tần số chạm đo thực tế (Hz)
-            if (refresh >= 90 || measuredHz > 120) {
-                baseGeneral -= 12;
-                baseRedDot -= 10;
-                btnSize = 44;
-            } else if (measuredHz > 0 && measuredHz < 60) {
-                // Màn hình phản hồi chậm -> tăng tiệm cận max 200
-                baseGeneral = Math.min(200, baseGeneral + 15);
-                baseRedDot = Math.min(200, baseRedDot + 10);
-            }
-
-            // Đảm bảo không vượt quá giới hạn 0 - 200
             const cap = (val) => Math.min(200, Math.max(0, Math.round(val)));
 
-            document.getElementById('ffGen').innerText = cap(baseGeneral);
-            document.getElementById('ffRed').innerText = cap(baseRedDot);
+            document.getElementById('ffGen').innerText = cap(baseGen);
+            document.getElementById('ffRed').innerText = cap(baseRed);
             document.getElementById('ff2x').innerText = cap(base2x);
             document.getElementById('ff4x').innerText = cap(base4x);
-            document.getElementById('ffSniper').innerText = cap(baseSniper);
+            document.getElementById('ffSniper').innerText = cap(110);
             document.getElementById('ffBtn').innerText = `${btnSize}%`;
 
-            document.getElementById('resultGrid').style.display = 'grid';
+            document.getElementById('aiResultBox').style.display = 'block';
         }
 
         function resetStats() {
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('aiResultBox').style.display = 'none';
             touchEvents = [];
-            totalTouches = 0;
             lastTouchTime = 0;
             points = [];
             measuredHz = 0;
             hzVal.innerText = "0 Hz";
             msVal.innerText = "0 ms";
-            cpsVal.innerText = "0";
             instructionText.style.display = 'block';
-            document.getElementById('resultGrid').style.display = 'none';
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
