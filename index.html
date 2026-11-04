@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Free Fire Touch & Sensitivity Checker (Scale 200)</title>
+    <title>Check Độ Nhạy Free Fire</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -60,7 +60,6 @@
             gap: 12px;
         }
 
-        /* Phần chọn dòng máy */
         .search-section {
             background-color: var(--card-bg);
             padding: 14px;
@@ -94,7 +93,6 @@
             border-color: var(--accent-ff);
         }
 
-        /* Dashboard cảm ứng */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -122,7 +120,6 @@
             margin-top: 2px;
         }
 
-        /* Vùng test vuốt kéo tâm Free Fire */
         #touchArea {
             width: 100%;
             height: 200px;
@@ -153,7 +150,6 @@
             height: 100%;
         }
 
-        /* Kết quả độ nhạy FF chuẩn 200 */
         .ai-result-box {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -200,7 +196,7 @@
     </div>
 
     <div class="container">
-        <!-- Phần chọn dòng máy -->
+        <!-- Ô chọn/tìm kiếm nhanh dòng điện thoại -->
         <div class="search-section">
             <div class="section-title">🎯 Chọn Dòng Điện Thoại Của Bạn</div>
             <input type="text" id="phoneInput" list="phoneList" placeholder="🔍 Gõ tên máy (VD: iPhone 13, Samsung A54, ROG...)" oninput="handlePhoneSelect()">
@@ -223,7 +219,7 @@
             </datalist>
         </div>
 
-        <!-- Dashboard đo tốc độ vuốt -->
+        <!-- Màn hình đo tốc độ kéo tâm -->
         <div class="dashboard">
             <div class="card">
                 <div class="card-title">Tốc Độ Vuốt (Hz)</div>
@@ -243,7 +239,7 @@
             <canvas id="drawCanvas"></canvas>
         </div>
 
-        <!-- Kết quả AI Độ Nhạy Free Fire -->
+        <!-- Kết quả cấu hình độ nhạy Free Fire chuẩn 200 -->
         <div class="ai-result-box" id="aiResultBox">
             <div class="section-title" style="color: var(--accent-ff);">🔥 Độ Nhạy Free Fire Đề Xuất (Thang 200)</div>
             <div class="result-grid">
@@ -331,7 +327,6 @@
         touchArea.addEventListener('touchstart', handleTouch, { passive: false });
         touchArea.addEventListener('touchmove', handleTouch, { passive: false });
 
-        // Thuật toán AI tùy chỉnh riêng cho Free Fire (Scale Max 200)
         function handlePhoneSelect() {
             const phoneName = document.getElementById('phoneInput').value.trim();
             if (phoneName.length < 2) return;
@@ -345,15 +340,15 @@
             const nameLower = phoneName.toLowerCase();
 
             if (nameLower.includes('iphone')) {
-                baseGen -= 8; // iOS mượt sẵn, giảm để chống bay tâm
+                baseGen -= 8; 
                 baseRed -= 5;
                 btnSize = 42;
             } else if (nameLower.includes('rog') || nameLower.includes('red magic') || nameLower.includes('s24')) {
-                baseGen -= 12; // Máy gaming cao cấp tốc độ siêu nhạy
+                baseGen -= 12; 
                 baseRed -= 10;
                 btnSize = 40;
             } else if (nameLower.includes('a14') || nameLower.includes('c55') || nameLower.includes('redmi') || nameLower.includes('a32')) {
-                baseGen = 194; // Máy phân khúc thấp tăng max độ nhạy để kéo tâm không bị nặng tay
+                baseGen = 194; 
                 baseRed = 196;
                 base2x = 182;
                 base4x = 160;
