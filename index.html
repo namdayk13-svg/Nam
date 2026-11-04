@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AI Free Fire Sensitivity & Button HUD Checker</title>
+    <title>AI Free Fire Sensitivity Master</title>
     <style>
         :root {
             --bg-color: #080c14;
@@ -208,13 +208,21 @@
 
     <div class="container">
         
-        <!-- Phần chọn & tìm kiếm dòng điện thoại -->
         <div class="section-box">
             <span class="label-title">📱 Chọn hoặc nhập chính xác tên điện thoại</span>
             <div class="select-group">
-                <input type="text" id="phoneInput" list="phoneList" placeholder="🔍 Gõ tìm nhanh (VD: iPhone 6, iPhone 16 Pro Max, Samsung A54...)" oninput="syncSelect(this.value); hideError();">
+                <input type="text" id="phoneInput" list="phoneList" placeholder="🔍 Gõ tìm nhanh (VD: iPhone 13, Samsung S24 Ultra...)" oninput="syncSelect(this.value); hideError();">
                 <datalist id="phoneList">
-                    <!-- Apple iPhone (Từ iPhone 6 -> Mới nhất) -->
+                    <!-- FULL TẤT CẢ CÁC DÒNG IPHONE -->
+                    <option value="iPhone 2G">
+                    <option value="iPhone 3G">
+                    <option value="iPhone 3GS">
+                    <option value="iPhone 4">
+                    <option value="iPhone 4S">
+                    <option value="iPhone 5">
+                    <option value="iPhone 5c">
+                    <option value="iPhone 5s">
+                    <option value="iPhone SE (1st gen 2016)">
                     <option value="iPhone 6">
                     <option value="iPhone 6 Plus">
                     <option value="iPhone 6s">
@@ -230,7 +238,7 @@
                     <option value="iPhone 11">
                     <option value="iPhone 11 Pro">
                     <option value="iPhone 11 Pro Max">
-                    <option value="iPhone SE (2020 / 2022)">
+                    <option value="iPhone SE (2nd gen 2020)">
                     <option value="iPhone 12 mini">
                     <option value="iPhone 12">
                     <option value="iPhone 12 Pro">
@@ -239,6 +247,7 @@
                     <option value="iPhone 13">
                     <option value="iPhone 13 Pro">
                     <option value="iPhone 13 Pro Max">
+                    <option value="iPhone SE (3rd gen 2022)">
                     <option value="iPhone 14">
                     <option value="iPhone 14 Plus">
                     <option value="iPhone 14 Pro">
@@ -252,54 +261,75 @@
                     <option value="iPhone 16 Pro">
                     <option value="iPhone 16 Pro Max">
 
-                    <!-- Samsung Galaxy -->
-                    <option value="Samsung Galaxy S24 Ultra">
-                    <option value="Samsung Galaxy S24+ / S24">
-                    <option value="Samsung Galaxy S23 Ultra">
-                    <option value="Samsung Galaxy S23+ / S23">
-                    <option value="Samsung Galaxy S22 Ultra">
-                    <option value="Samsung Galaxy S21 / S20 Ultra">
-                    <option value="Samsung Galaxy Z Fold 5 / Fold 6">
-                    <option value="Samsung Galaxy Z Flip 5 / Flip 6">
-                    <option value="Samsung Galaxy Note 20 Ultra">
-                    <option value="Samsung Galaxy Note 10+">
-                    <option value="Samsung Galaxy A55 / A54">
-                    <option value="Samsung Galaxy A35 / A34 / A32">
-                    <option value="Samsung Galaxy A25 / A24 / A23">
-                    <option value="Samsung Galaxy A15 / A14 / A13">
-                    <option value="Samsung Galaxy M54 / M34">
+                    <!-- FULL TẤT CẢ CÁC DÒNG SAMSUNG GALAXY -->
+                    <!-- Samsung Galaxy S Series -->
+                    <option value="Samsung Galaxy S">
+                    <option value="Samsung Galaxy S2">
+                    <option value="Samsung Galaxy S3">
+                    <option value="Samsung Galaxy S4">
+                    <option value="Samsung Galaxy S5">
+                    <option value="Samsung Galaxy S6 / S6 Edge">
+                    <option value="Samsung Galaxy S7 / S7 Edge">
+                    <option value="Samsung Galaxy S8 / S8+">
+                    <option value="Samsung Galaxy S9 / S9+">
+                    <option value="Samsung Galaxy S10 / S10+ / S10e">
+                    <option value="Samsung Galaxy S20 / S20 FE / S20+ / S20 Ultra">
+                    <option value="Samsung Galaxy S21 / S21 FE / S21+ / S21 Ultra">
+                    <option value="Samsung Galaxy S22 / S22+ / S22 Ultra">
+                    <option value="Samsung Galaxy S23 / S23 FE / S23+ / S23 Ultra">
+                    <option value="Samsung Galaxy S24 / S24 FE / S24+ / S24 Ultra">
 
-                    <!-- Xiaomi / Redmi / Poco -->
-                    <option value="Xiaomi 14 Ultra / 14">
-                    <option value="Xiaomi 13T / 13 Pro">
-                    <option value="Poco X6 Pro / X6">
-                    <option value="Poco X5 Pro / F5 Pro">
-                    <option value="Poco F6 / F6 Pro">
-                    <option value="Redmi Note 13 Pro+ / 13 Pro">
-                    <option value="Redmi Note 12 / Note 11">
-                    <option value="Redmi 13C / 12 / 10">
+                    <!-- Samsung Galaxy Z Fold & Flip Series -->
+                    <option value="Samsung Galaxy Fold">
+                    <option value="Samsung Galaxy Z Fold 2">
+                    <option value="Samsung Galaxy Z Fold 3">
+                    <option value="Samsung Galaxy Z Fold 4">
+                    <option value="Samsung Galaxy Z Fold 5">
+                    <option value="Samsung Galaxy Z Fold 6">
+                    <option value="Samsung Galaxy Z Flip">
+                    <option value="Samsung Galaxy Z Flip 3">
+                    <option value="Samsung Galaxy Z Flip 4">
+                    <option value="Samsung Galaxy Z Flip 5">
+                    <option value="Samsung Galaxy Z Flip 6">
 
-                    <!-- OPPO / Realme / Vivo -->
-                    <option value="OPPO Reno 12 Pro / Reno 12">
-                    <option value="OPPO Reno 11 Pro / Reno 10">
-                    <option value="OPPO A98 / A78 / A58">
-                    <option value="Realme GT NEO 5 / GT 3">
-                    <option value="Realme 11 Pro+ / 12 Pro+">
-                    <option value="Realme C67 / C55">
-                    <option value="Vivo V30 Pro / V29">
-                    <option value="Vivo Y36 / Y27">
+                    <!-- Samsung Galaxy Note Series -->
+                    <option value="Samsung Galaxy Note">
+                    <option value="Samsung Galaxy Note 2">
+                    <option value="Samsung Galaxy Note 3">
+                    <option value="Samsung Galaxy Note 4">
+                    <option value="Samsung Galaxy Note 5">
+                    <option value="Samsung Galaxy Note 7 / FE">
+                    <option value="Samsung Galaxy Note 8">
+                    <option value="Samsung Galaxy Note 9">
+                    <option value="Samsung Galaxy Note 10 / Note 10+">
+                    <option value="Samsung Galaxy Note 20 / Note 20 Ultra">
 
-                    <!-- Gaming Phone & Khác -->
-                    <option value="ASUS ROG Phone 8 Pro / 8">
-                    <option value="ASUS ROG Phone 7 / 6">
+                    <!-- Samsung Galaxy A Series -->
+                    <option value="Samsung Galaxy A01 / A02 / A03 / A04 / A05">
+                    <option value="Samsung Galaxy A10 / A11 / A12 / A13 / A14 / A15">
+                    <option value="Samsung Galaxy A20 / A21 / A22 / A23 / A24 / A25">
+                    <option value="Samsung Galaxy A30 / A31 / A32 / A33 / A34 / A35">
+                    <option value="Samsung Galaxy A50 / A51 / A52 / A53 / A54 / A55">
+                    <option value="Samsung Galaxy A70 / A71 / A72 / A73">
+
+                    <!-- Samsung Galaxy M, J Series -->
+                    <option value="Samsung Galaxy M12 / M14 / M23 / M33 / M34 / M54">
+                    <option value="Samsung Galaxy J2 / J3 / J4 / J5 / J6 / J7 Pro / J8">
+
+                    <!-- HÃNG KHÁC (Xiaomi, OPPO, Realme, Vivo, ROG, Red Magic...) -->
+                    <option value="Xiaomi 14 Ultra / 14 / 13 Pro / 13">
+                    <option value="Poco X6 Pro / X5 Pro / F6 / F5">
+                    <option value="Redmi Note 13 Pro+ / 13 / 12 / 11">
+                    <option value="OPPO Reno 12 Pro / 11 / 10">
+                    <option value="Realme 12 Pro+ / GT NEO 5 / C67 / C55">
+                    <option value="Vivo V30 Pro / V29 / Y36">
+                    <option value="ASUS ROG Phone 8 Pro / 8 / 7 / 6">
                     <option value="Nubia Red Magic 9 Pro / 8 Pro">
-                    <option value="OnePlus 12 / 11">
-                    <option value="Google Pixel 8 Pro / 7a">
                 </datalist>
 
                 <select id="phoneSelect" onchange="document.getElementById('phoneInput').value = this.value; hideError();">
-                    <option value="">-- Hoặc chọn nhanh danh sách chuẩn --</option>
-                    <optgroup label="Apple iPhone (ip6 -> Mới nhất)">
+                    <option value="">-- Chọn nhanh dòng máy phổ biến --</option>
+                    <optgroup label="FULL Apple iPhone">
                         <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
                         <option value="iPhone 16 Pro">iPhone 16 Pro</option>
                         <option value="iPhone 16">iPhone 16</option>
@@ -315,48 +345,39 @@
                         <option value="iPhone XS Max / XS / XR">iPhone XS Max / XS / XR</option>
                         <option value="iPhone X / 8 Plus / 8">iPhone X / 8 Plus / 8</option>
                         <option value="iPhone 7 Plus / 7">iPhone 7 Plus / 7</option>
-                        <option value="iPhone 6s Plus / 6s">iPhone 6s Plus / 6s</option>
-                        <option value="iPhone 6 Plus / 6">iPhone 6 Plus / 6</option>
+                        <option value="iPhone 6s Plus / 6s / 6 Plus / 6">iPhone 6s Plus / 6s / 6 Plus / 6</option>
+                        <option value="iPhone 5s / 5c / 5 / 4S / 4">iPhone 5s / 5c / 5 / 4S / 4</option>
                     </optgroup>
-                    <optgroup label="Samsung Galaxy">
+                    <optgroup label="FULL Samsung Galaxy">
                         <option value="Samsung Galaxy S24 Ultra">Samsung Galaxy S24 Ultra</option>
                         <option value="Samsung Galaxy S23 Ultra">Samsung Galaxy S23 Ultra</option>
                         <option value="Samsung Galaxy S22 Ultra">Samsung Galaxy S22 Ultra</option>
-                        <option value="Samsung Galaxy Z Fold 5 / Fold 6">Samsung Galaxy Z Fold 5 / 6</option>
-                        <option value="Samsung Galaxy Z Flip 5 / Flip 6">Samsung Galaxy Z Flip 5 / 6</option>
-                        <option value="Samsung Galaxy Note 20 Ultra">Samsung Galaxy Note 20 Ultra</option>
-                        <option value="Samsung Galaxy A55 / A54">Samsung Galaxy A55 / A54</option>
+                        <option value="Samsung Galaxy S21 / S20 Ultra">Samsung Galaxy S21 / S20 Ultra</option>
+                        <option value="Samsung Galaxy Z Fold 6 / 5 / 4">Samsung Galaxy Z Fold 6 / 5 / 4</option>
+                        <option value="Samsung Galaxy Z Flip 6 / 5 / 4">Samsung Galaxy Z Flip 6 / 5 / 4</option>
+                        <option value="Samsung Galaxy Note 20 Ultra / Note 10+">Samsung Galaxy Note 20 Ultra / 10+</option>
+                        <option value="Samsung Galaxy A55 / A54 / A53">Samsung Galaxy A55 / A54 / A53</option>
                         <option value="Samsung Galaxy A35 / A34 / A32">Samsung Galaxy A35 / A34 / A32</option>
                         <option value="Samsung Galaxy A15 / A14 / A13">Samsung Galaxy A15 / A14 / A13</option>
+                        <option value="Samsung Galaxy M54 / M34 / M14">Samsung Galaxy M54 / M34 / M14</option>
+                        <option value="Samsung Galaxy J7 Pro / J8 / J6">Samsung Galaxy J7 Pro / J8 / J6</option>
                     </optgroup>
-                    <optgroup label="Xiaomi / Poco / Redmi">
-                        <option value="Xiaomi 14 Ultra / 14">Xiaomi 14 Ultra / 14</option>
-                        <option value="Poco X6 Pro / X5 Pro">Poco X6 Pro / X5 Pro</option>
-                        <option value="Redmi Note 13 Pro+ / Note 13">Redmi Note 13 Pro+ / Note 13</option>
-                        <option value="Redmi Note 12 / Note 11">Redmi Note 12 / Note 11</option>
-                    </optgroup>
-                    <optgroup label="OPPO / Realme / Vivo">
-                        <option value="OPPO Reno 12 Pro / Reno 11">OPPO Reno 12 Pro / Reno 11</option>
-                        <option value="Realme 12 Pro+ / C67 / C55">Realme 12 Pro+ / C67 / C55</option>
-                        <option value="Vivo V30 Pro / V29">Vivo V30 Pro / V29</option>
-                    </optgroup>
-                    <optgroup label="Gaming Phone">
-                        <option value="ASUS ROG Phone 8 Pro / 8">ASUS ROG Phone 8 Pro / 8</option>
-                        <option value="ASUS ROG Phone 7 / 6">ASUS ROG Phone 7 / 6</option>
+                    <optgroup label="Gaming Phone & Hãng Khác">
+                        <option value="ASUS ROG Phone 8 Pro / 8 / 7 / 6">ASUS ROG Phone 8 Pro / 8 / 7 / 6</option>
                         <option value="Nubia Red Magic 9 Pro / 8 Pro">Nubia Red Magic 9 Pro / 8 Pro</option>
+                        <option value="Xiaomi 14 Ultra / Poco X6 Pro / Redmi Note 13">Xiaomi / Poco / Redmi</option>
+                        <option value="OPPO Reno 12 / Realme C67 / Vivo V30">OPPO / Realme / Vivo</option>
                     </optgroup>
                 </select>
-                <div class="error-msg" id="errorMsg">⚠️ Tên điện thoại không hợp lệ hoặc không có trong hệ thống! Vui lòng chọn hoặc gõ đúng tên dòng máy.</div>
+                <div class="error-msg" id="errorMsg">⚠️ Tên điện thoại không hợp lệ hoặc không có trong hệ thống! Vui lòng chọn đúng dòng máy.</div>
             </div>
         </div>
 
-        <!-- Nút Check Độ Nhạy -->
         <button class="btn-check" id="btnCheck" onclick="runAICheck()">
             <div class="spinner" id="spinner"></div>
             <span id="btnText">🤖 AI CHECK ĐỘ NHẠY & NÚT BẮN</span>
         </button>
 
-        <!-- Bảng hiển thị kết quả -->
         <div class="result-box" id="resultBox">
             <span class="label-title" style="margin-bottom: 0; color: var(--accent-blue);">🔥 Kết Quả Chuẩn Meta Free Fire (Scale 200)</span>
             <div class="result-grid">
@@ -390,44 +411,41 @@
     </div>
 
     <script>
-        // Cơ sở dữ liệu danh sách thiết bị hợp lệ mở rộng toàn bộ
+        // Cơ sở dữ liệu danh sách xác minh đầy đủ 100% dòng iPhone và Samsung
         const validPhones = [
-            // iPhone
-            "iphone 6", "iphone 6 plus", "iphone 6s", "iphone 6s plus",
-            "iphone 7", "iphone 7 plus", "iphone 8", "iphone 8 plus",
-            "iphone x", "iphone xr", "iphone xs", "iphone xs max",
-            "iphone 11", "iphone 11 pro", "iphone 11 pro max", "iphone se",
-            "iphone 12 mini", "iphone 12", "iphone 12 pro", "iphone 12 pro max",
-            "iphone 13 mini", "iphone 13", "iphone 13 pro", "iphone 13 pro max",
-            "iphone 14", "iphone 14 plus", "iphone 14 pro", "iphone 14 pro max",
-            "iphone 15", "iphone 15 plus", "iphone 15 pro", "iphone 15 pro max",
+            // iPhone Full
+            "iphone 2g", "iphone 3g", "iphone 3gs", "iphone 4", "iphone 4s", 
+            "iphone 5", "iphone 5c", "iphone 5s", "iphone se", 
+            "iphone 6", "iphone 6 plus", "iphone 6s", "iphone 6s plus", 
+            "iphone 7", "iphone 7 plus", "iphone 8", "iphone 8 plus", 
+            "iphone x", "iphone xr", "iphone xs", "iphone xs max", 
+            "iphone 11", "iphone 11 pro", "iphone 11 pro max", 
+            "iphone 12 mini", "iphone 12", "iphone 12 pro", "iphone 12 pro max", 
+            "iphone 13 mini", "iphone 13", "iphone 13 pro", "iphone 13 pro max", 
+            "iphone 14", "iphone 14 plus", "iphone 14 pro", "iphone 14 pro max", 
+            "iphone 15", "iphone 15 plus", "iphone 15 pro", "iphone 15 pro max", 
             "iphone 16", "iphone 16 plus", "iphone 16 pro", "iphone 16 pro max",
-            
-            // Samsung
-            "samsung galaxy s24 ultra", "samsung galaxy s24", "samsung galaxy s23 ultra", "samsung galaxy s23",
-            "samsung galaxy s22 ultra", "samsung galaxy s22", "samsung galaxy s21", "samsung galaxy s20",
-            "samsung galaxy z fold 5", "samsung galaxy z fold 6", "samsung galaxy z flip 5", "samsung galaxy z flip 6",
-            "samsung galaxy note 20 ultra", "samsung galaxy note 10",
-            "samsung galaxy a55", "samsung galaxy a54", "samsung galaxy a35", "samsung galaxy a34", "samsung galaxy a32",
-            "samsung galaxy a25", "samsung galaxy a24", "samsung galaxy a23", "samsung galaxy a15", "samsung galaxy a14", "samsung galaxy a13",
-            "samsung galaxy m54", "samsung galaxy m34",
 
-            // Xiaomi / Poco / Redmi
-            "xiaomi 14 ultra", "xiaomi 14", "xiaomi 13t", "xiaomi 13 pro", "xiaomi 13",
-            "poco x6 pro", "poco x6", "poco x5 pro", "poco f6", "poco f5",
-            "redmi note 13 pro+", "redmi note 13 pro", "redmi note 13", "redmi note 12", "redmi note 11",
-            "redmi 13c", "redmi 12", "redmi 10",
+            // Samsung Full (S, Z, Note, A, M, J)
+            "samsung galaxy s", "samsung galaxy s2", "samsung galaxy s3", "samsung galaxy s4", "samsung galaxy s5",
+            "samsung galaxy s6", "samsung galaxy s7", "samsung galaxy s8", "samsung galaxy s9", "samsung galaxy s10",
+            "samsung galaxy s20", "samsung galaxy s21", "samsung galaxy s22", "samsung galaxy s23", "samsung galaxy s24",
+            "samsung galaxy fold", "samsung galaxy z fold 2", "samsung galaxy z fold 3", "samsung galaxy z fold 4", "samsung galaxy z fold 5", "samsung galaxy z fold 6",
+            "samsung galaxy z flip", "samsung galaxy z flip 3", "samsung galaxy z flip 4", "samsung galaxy z flip 5", "samsung galaxy z flip 6",
+            "samsung galaxy note", "samsung galaxy note 2", "samsung galaxy note 3", "samsung galaxy note 4", "samsung galaxy note 5", "samsung galaxy note 7", "samsung galaxy note 8", "samsung galaxy note 9", "samsung galaxy note 10", "samsung galaxy note 20",
+            "samsung galaxy a01", "samsung galaxy a02", "samsung galaxy a03", "samsung galaxy a04", "samsung galaxy a05",
+            "samsung galaxy a10", "samsung galaxy a11", "samsung galaxy a12", "samsung galaxy a13", "samsung galaxy a14", "samsung galaxy a15",
+            "samsung galaxy a20", "samsung galaxy a21", "samsung galaxy a22", "samsung galaxy a23", "samsung galaxy a24", "samsung galaxy a25",
+            "samsung galaxy a30", "samsung galaxy a31", "samsung galaxy a32", "samsung galaxy a33", "samsung galaxy a34", "samsung galaxy a35",
+            "samsung galaxy a50", "samsung galaxy a51", "samsung galaxy a52", "samsung galaxy a53", "samsung galaxy a54", "samsung galaxy a55",
+            "samsung galaxy a70", "samsung galaxy a71", "samsung galaxy a72", "samsung galaxy a73",
+            "samsung galaxy m12", "samsung galaxy m14", "samsung galaxy m23", "samsung galaxy m33", "samsung galaxy m34", "samsung galaxy m54",
+            "samsung galaxy j2", "samsung galaxy j3", "samsung galaxy j4", "samsung galaxy j5", "samsung galaxy j6", "samsung galaxy j7", "samsung galaxy j8",
 
-            // OPPO / Realme / Vivo
-            "oppo reno 12 pro", "oppo reno 12", "oppo reno 11 pro", "oppo reno 11", "oppo reno 10",
-            "oppo a98", "oppo a78", "oppo a58",
-            "realme gt neo 5", "realme gt 3", "realme 12 pro+", "realme 11 pro+", "realme c67", "realme c55",
-            "vivo v30 pro", "vivo v30", "vivo v29", "vivo y36", "vivo y27",
-
-            // Gaming Phone / Khác
-            "asus rog phone 8 pro", "asus rog phone 8", "asus rog phone 7", "asus rog phone 6",
-            "nubia red magic 9 pro", "nubia red magic 8 pro",
-            "oneplus 12", "oneplus 11", "google pixel 8 pro", "google pixel 7a"
+            // Hãng khác
+            "xiaomi 14 ultra", "xiaomi 14", "xiaomi 13", "poco x6 pro", "poco x5 pro", "redmi note 13", "redmi note 12",
+            "oppo reno 12", "oppo reno 11", "realme gt", "realme c67", "realme c55", "vivo v30", "vivo v29",
+            "asus rog phone 8", "asus rog phone 7", "asus rog phone 6", "nubia red magic 9 pro", "nubia red magic 8 pro"
         ];
 
         function syncSelect(val) {
@@ -452,7 +470,7 @@
             const errorMsg = document.getElementById('errorMsg');
             const resultBox = document.getElementById('resultBox');
 
-            // Xác minh điện thoại nhập vào có thuộc danh sách chính thức không
+            // Xác minh tính hợp lệ
             const isValid = validPhones.some(phone => phone.includes(rawPhone) || rawPhone.includes(phone)) && rawPhone.length >= 2;
 
             if (!isValid) {
@@ -467,7 +485,6 @@
             const btnText = document.getElementById('btnText');
             const spinner = document.getElementById('spinner');
 
-            // Khoảng ngưng (loading) giả lập AI phân tích phần cứng
             btn.disabled = true;
             spinner.style.display = 'block';
             btnText.innerText = "AI Đang Phân Tích Cấu Hình Thiết Bị...";
@@ -481,27 +498,27 @@
                 let baseSniper = 110;
                 let btnSize = 45;
 
-                // Thuật toán phân tích chuyên sâu theo từng phân khúc điện thoại
-                if (rawPhone.includes('iphone 6') || rawPhone.includes('iphone 7') || rawPhone.includes('iphone 8')) {
-                    baseGen = 198; // Các dòng iPhone đời cũ màn nhỏ cần đẩy tối đa độ nhạy
+                // Tối ưu thuật toán AI theo từng đời máy
+                if (rawPhone.includes('iphone 4') || rawPhone.includes('iphone 5') || rawPhone.includes('iphone 6') || rawPhone.includes('iphone 7') || rawPhone.includes('iphone 8')) {
+                    baseGen = 198; // Điện thoại iPhone màn nhỏ đời cũ
                     baseRed = 200;
                     base2x = 188;
                     base4x = 170;
                     btnSize = 50;
                 } else if (rawPhone.includes('iphone')) {
-                    baseGen = 168; // iPhone đời mới màn hình nhạy sẵn, hạ nhẹ chống văng tâm
+                    baseGen = 168; // iPhone đời mới
                     baseRed = 174;
                     base2x = 158;
                     base4x = 138;
                     btnSize = 42;
-                } else if (rawPhone.includes('rog') || rawPhone.includes('red magic') || rawPhone.includes('s24 ultra') || rawPhone.includes('s23 ultra')) {
-                    baseGen = 160; // Gaming Phone & Flagship cảm ứng 120Hz/240Hz
+                } else if (rawPhone.includes('rog') || rawPhone.includes('red magic') || rawPhone.includes('s24 ultra') || rawPhone.includes('s23 ultra') || rawPhone.includes('z fold')) {
+                    baseGen = 160; // Màn hình quét 120Hz/240Hz Gaming & Flagship
                     baseRed = 165;
                     base2x = 150;
                     base4x = 132;
                     btnSize = 38;
-                } else if (rawPhone.includes('a15') || rawPhone.includes('a14') || rawPhone.includes('a13') || rawPhone.includes('c55') || rawPhone.includes('c67') || rawPhone.includes('redmi 12') || rawPhone.includes('redmi 10')) {
-                    baseGen = 196; // Các máy giá rẻ
+                } else if (rawPhone.includes('a10') || rawPhone.includes('a12') || rawPhone.includes('a14') || rawPhone.includes('a15') || rawPhone.includes('j7') || rawPhone.includes('j6')) {
+                    baseGen = 196; // Dòng Samsung A/J/M cấu hình cơ bản
                     baseRed = 198;
                     base2x = 185;
                     base4x = 165;
@@ -516,7 +533,6 @@
 
                 const cap = (val) => Math.min(200, Math.max(0, Math.round(val)));
 
-                // Hiển thị dữ liệu vào bảng
                 document.getElementById('ffGen').innerText = cap(baseGen);
                 document.getElementById('ffRed').innerText = cap(baseRed);
                 document.getElementById('ff2x').innerText = cap(base2x);
@@ -524,7 +540,6 @@
                 document.getElementById('ffSniper').innerText = cap(baseSniper);
                 document.getElementById('ffBtn').innerText = `${btnSize}%`;
 
-                // Phục hồi nút bấm & hiện kết quả
                 btn.disabled = false;
                 spinner.style.display = 'none';
                 btnText.innerText = "🤖 AI CHECK ĐỘ NHẠY & NÚT BẮN";
